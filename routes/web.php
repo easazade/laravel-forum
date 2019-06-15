@@ -18,8 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/threads', 'ThreadsController@index');
-Route::get('/threads/{id}','ThreadsController@show');
+Route::get('/threads', 'ThreadsController@index')->name('threads');
+Route::get('/threads/{id}','ThreadsController@show')->name('threads.show');
 
 Auth::routes();
 
