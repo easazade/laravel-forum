@@ -20,7 +20,9 @@ Route::get('/', function () {
 
 Route::get('/threads', 'ThreadsController@index')->name('threads');
 Route::get('/threads/{id}','ThreadsController@show')->name('threads.show');
+Route::post('/threads/{id}/replies','RepliesController@store')->name('replies.add');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+

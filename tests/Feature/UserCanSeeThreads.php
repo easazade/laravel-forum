@@ -6,7 +6,7 @@ use App\Thread;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
-class ThreadsTest extends TestCase {
+class UserCanSeeThreads extends TestCase {
 
     use DatabaseMigrations;
 

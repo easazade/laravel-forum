@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model {
 //    public $owner;
+    protected $guarded = [];
 
     public function __construct(array $attributes = []) {
         parent::__construct($attributes);
