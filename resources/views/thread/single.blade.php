@@ -29,5 +29,22 @@
             </div>
         </div>
 
+        @if(auth()->check())
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <form method="post" action="{{ route('replies.add',['id' => $thread->id]) }}">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="body">Body:</label>
+                            <textarea name="body" id="body" class="form-control" placeholder="have something to say"
+                                      rows="5"></textarea>
+                            <br>
+                            <button type="submit" class="btn btn-default">Post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        @endif
+
     </div>
 @endsection
