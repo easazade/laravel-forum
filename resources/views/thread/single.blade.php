@@ -30,7 +30,7 @@
         </div>
 
         @if(auth()->check())
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-md-8 col-md-offset-2">
                     <form method="post" action="{{ route('replies.add',['id' => $thread->id]) }}">
                         {{ csrf_field() }}
@@ -43,6 +43,10 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        @else
+            <div class="row justify-content-center">
+                Please <a href="{{ route('login') }}">&nbsp;sign&nbsp;</a>  in to reply on this thread
             </div>
         @endif
 

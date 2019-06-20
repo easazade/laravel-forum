@@ -22,5 +22,6 @@ class RepliesController extends Controller {
             return redirect(route('threads.show', ['id' => $threadId]));
             //        return back();
         }
+        return back();
     }
 }
