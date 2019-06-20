@@ -13,11 +13,11 @@ class Thread extends Model {
         return $this->hasMany(Reply::class);
     }
 
-    function owner(){
-        return $this->belongsTo(User::class,'user_id');
+    function owner() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    function addReply($params){
+    function addReply($params) {
 //        $reply = new Reply([
 //            'thread_id' => $this->id,
 //            'user_id' => $params['user_id'],
@@ -25,6 +25,10 @@ class Thread extends Model {
 //        ]);
 //        $reply->save();
         $this->replies()->create($params);
+    }
+
+    function path() {
+        return route('threads.show', ['id' => $this->id]);
     }
 
 }

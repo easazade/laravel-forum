@@ -19,6 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/threads', 'ThreadsController@index')->name('threads');
+Route::post('/threads', 'ThreadsController@store')->name('threads');
 Route::get('/threads/{id}','ThreadsController@show')->name('threads.show');
 Route::post('/threads/{id}/replies','RepliesController@store')->name('replies.add');
 
