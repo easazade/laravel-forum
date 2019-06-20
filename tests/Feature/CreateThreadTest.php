@@ -6,6 +6,7 @@ use App\Thread;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Exception;
 
 class CreateThreadTest extends TestCase {
     use DatabaseMigrations;
@@ -32,10 +33,10 @@ class CreateThreadTest extends TestCase {
      * @test
      */
     function guests_may_not_create_a_thread() {
+        $this->expectException(Exception::class);
         //when user hit endpoint to create a new user
         $newThread = factory(Thread::class)->make();
-        $this->post(route('threads'), $newThread->toArray())
-            ->assertStatus(302);
+        $this->post(route('threads'), $newThread->toArray());
 
     }
 
