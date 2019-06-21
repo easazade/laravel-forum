@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Reply;
 use App\Thread;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
@@ -14,7 +15,7 @@ class UserCanSeeThreads extends TestCase {
 
     public function setUp(): void {
         parent::setUp();
-        $this->thread = factory('App\Thread')->create();
+        $this->thread = create(Thread::class);
     }
 
 
@@ -46,7 +47,7 @@ class UserCanSeeThreads extends TestCase {
      */
     public function a_user_can_see_replies_associated_with_a_thread() {
         //with
-        $reply = factory('App\Reply')->create(['thread_id' => $this->thread->id]);
+        $reply = create(Reply::class, ['thread_id' => $this->thread->id]);
         //when
         $response = $this->get('/threads/' . $this->thread->id);
         //then

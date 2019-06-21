@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\ThreadsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,10 +19,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/threads', 'ThreadsController@index')->name('threads');
-Route::post('/threads', 'ThreadsController@store')->name('threads');
-Route::get('/threads/{id}','ThreadsController@show')->name('threads.show');
-Route::post('/threads/{id}/replies','RepliesController@store')->name('replies.add');
+Route::resource('threads', 'ThreadsController');
+
+//Route::get('/threads', 'ThreadsController@index')->name('threads.index');
+//Route::post('/threads', 'ThreadsController@store')->name('threads.store');
+//Route::get('/threads/{id}','ThreadsController@show')->name('threads.show');
+//Route::get('/threads/create')->name('threads.create');
+
+Route::post('/threads/{id}/replies', 'RepliesController@store')->name('replies.add');
 
 Auth::routes();
 

@@ -47,8 +47,7 @@ class ThreadsController extends Controller {
         return redirect($thread->path());
     }
 
-    public function show(Request $request) {
-        $id = $request['id'];
+    public function show($id) {
         $thread = Thread::find($id);
         return view('thread.single')->with('thread', $thread);
     }
@@ -56,31 +55,30 @@ class ThreadsController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Thread $thread
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return void
      */
-    public function edit(Thread $thread) {
+    public function edit($id) {
         //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Thread $thread
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return void
      */
-    public function update(Request $request, Thread $thread) {
+    public function update(Request $request, $id) {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Thread $thread
-     * @return \Illuminate\Http\Response
+     * @param $id
      */
-    public function destroy(Thread $thread) {
+    public function destroy($id) {
         //
     }
 }

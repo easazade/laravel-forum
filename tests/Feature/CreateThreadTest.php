@@ -16,10 +16,10 @@ class CreateThreadTest extends TestCase {
      */
     function an_authenticated_user_can_create_new_forum_threads() {
         //given we have a signed in user
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
         //when user hit endpoint to create a new user
-        $newThread = factory(Thread::class)->make();
-        $statusCode = $this->post(route('threads'), $newThread->toArray())->status();
+        $newThread = make(Thread::class);
+        $statusCode = $this->post(route('threads.store'), $newThread->toArray())->status();
         $this->assertTrue($statusCode > 200 && $statusCode < 400);
         //and then we visit our thread page (assert) we should see the new thread
         $response = $this->get(route('threads.show', ['id' => $newThread['id']]));
@@ -35,7 +35,7 @@ class CreateThreadTest extends TestCase {
     function guests_may_not_create_a_thread() {
         $this->expectException(Exception::class);
         //when user hit endpoint to create a new user
-        $newThread = factory(Thread::class)->make();
+        $newThread = make(Thread::class);
         $this->post(route('threads'), $newThread->toArray());
 
     }

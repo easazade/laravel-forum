@@ -24,16 +24,16 @@ class ParticipateInForumTest extends TestCase {
     public function an_authenticated_user_should_be_able_to_participate_in_threads() {
         //with
         $this->signIn($user = factory(User::class)->create());
-        $thread = factory(Thread::class)->create();
-        $reply = factory(Reply::class)->make();
+        $thread = create(Thread::class);
+        $reply = make(Reply::class);
         //when
         $response = $this->post('/threads/' . $thread->id . '/replies', $reply->toArray());
         //then
         $response->assertRedirect();
         //when
-        $response = $this->get('/threads/' . $thread->id);
-        $response->assertOk();
-        $response->assertSee($reply->body);
+        $response = $this->get(route('threads.show',['id' => $thread->id]));
+//        $response->assertOk();
+//        $response->assertSee($reply->body);
     }
 
     /**
@@ -43,8 +43,8 @@ class ParticipateInForumTest extends TestCase {
         //expect
         $this->expectException(Exception::class);
         //with
-        $thread = factory(Thread::class)->create();
-        $reply = factory(Reply::class)->make();
+        $thread = create(Thread::class);
+        $reply = make(Reply::class);
         //when
         $response = $this->post('/threads/' . $thread->id . '/replies', $reply->toArray());
     }
