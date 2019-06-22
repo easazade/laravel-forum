@@ -15,7 +15,7 @@
                                         {{ $thread->title }}
                                     </a>
                                 </h4>
-                                <div class="body">{{ $thread->body }}</div>
+                                <div class="body">{{ substr($thread->body,0,201) }}</div>
                             </article>
                             <hr>
                         @endforeach

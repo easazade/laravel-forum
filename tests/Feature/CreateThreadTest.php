@@ -37,7 +37,15 @@ class CreateThreadTest extends TestCase {
         //when user hit endpoint to create a new user
         $newThread = make(Thread::class);
         $this->post(route('threads'), $newThread->toArray());
-
     }
+
+    /**
+     * @test
+     */
+    function guests_cannot_see_create_thread_page() {
+        $this->get(route('threads.create'))
+            ->assertRedirect(route('login'));
+    }
+
 
 }

@@ -40,6 +40,7 @@ class ParticipateInForumTest extends TestCase {
      * @test
      */
     public function a_NON_authenticated_user_should_NOT_be_able_to_participate_in_threads() {
+        $this->disableExceptionHandling();
         //expect
         $this->expectException(Exception::class);
         //with
