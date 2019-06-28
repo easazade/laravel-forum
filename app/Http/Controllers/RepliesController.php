@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 class RepliesController extends Controller {
 
-    function store(Request $request) {
-        $threadId = $request['id'];
-        $body = $request['body'];
+    /**
+     * @param $threadChannelSlug
+     * @param $threadId
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    function store($threadChannelSlug, $threadId) {
+//        $threadId = $request['id'];
+//        $threadChannelSlug = $request['channel_slug'];
+        $this->validate(request(), ['body' => 'required']);
+
+        $body = request('body');
 
         if ($threadId != null && $body != null) {
             $thread = Thread::find($threadId);
@@ -19,8 +25,8 @@ class RepliesController extends Controller {
                 'body' => $body,
                 'user_id' => auth()->id()
             ]);
-            return redirect(route('threads.show', ['id' => $threadId]));
-            //        return back();
+            return redirect(route('threads.show', ['channel_slug' => $threadChannelSlug, 'id' => $threadId]));
+//            return back();
         }
         return back();
     }

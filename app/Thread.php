@@ -17,6 +17,10 @@ class Thread extends Model {
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    function channel() {
+        return $this->belongsTo(Channel::class, 'channel_id');
+    }
+
     function addReply($params) {
 //        $reply = new Reply([
 //            'thread_id' => $this->id,
@@ -28,7 +32,7 @@ class Thread extends Model {
     }
 
     function path() {
-        return route('threads.show', ['id' => $this->id]);
+        return route('threads.show', ['channel_slug' => $this->channel->slug, 'id' => $this->id], false);
     }
 
 }

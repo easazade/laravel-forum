@@ -19,14 +19,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('threads', 'ThreadsController');
+//Route::get('/threads/{channel_slug}/{id}','ThreadsController@show')->name('threads.show');
 
-//Route::get('/threads', 'ThreadsController@index')->name('threads.index');
-//Route::post('/threads', 'ThreadsController@store')->name('threads.store');
-//Route::get('/threads/{id}','ThreadsController@show')->name('threads.show');
-//Route::get('/threads/create')->name('threads.create');
+//Route::resource('threads', 'ThreadsController');
 
-Route::post('/threads/{id}/replies', 'RepliesController@store')->name('replies.add');
+
+Route::get('/threads', 'ThreadsController@index')->name('threads.index');
+Route::get('/threads/create', 'ThreadsController@create')->name('threads.create');
+Route::get('/threads/{channel_slug}/{id}', 'ThreadsController@show')->name('threads.show');
+Route::post('/threads', 'ThreadsController@store')->name('threads.store');
+Route::get('/threads/{channel_slug}','ThreadsController@index');
+
+Route::post('/threads/{channel_slug}/{id}/replies', 'RepliesController@store')->name('replies.add');
 
 Auth::routes();
 

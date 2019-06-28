@@ -32,7 +32,7 @@
         @if(auth()->check())
             <div class="row justify-content-center">
                 <div class="col-md-8 col-md-offset-2">
-                    <form method="post" action="{{ route('replies.add',['id' => $thread->id]) }}">
+                    <form method="post" action="{{route('replies.add',['channel_slug'=>$thread->channel->slug,'id' => $thread->id]) }}">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="body">Body:</label>
@@ -46,7 +46,7 @@
             </div>
         @else
             <div class="row justify-content-center">
-                Please <a href="{{ route('login') }}">&nbsp;sign&nbsp;</a>  in to reply on this thread
+                Please <a href="{{ route('login') }}">&nbsp;sign&nbsp;</a> in to reply on this thread
             </div>
         @endif
 

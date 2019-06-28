@@ -25,13 +25,15 @@ class ParticipateInForumTest extends TestCase {
         //with
         $this->signIn($user = factory(User::class)->create());
         $thread = create(Thread::class);
-        $reply = make(Reply::class);
+        $reply = create(Reply::class);
         //when
-        $response = $this->post('/threads/' . $thread->id . '/replies', $reply->toArray());
+        $url = "/threads/{$thread->channel->slug}/{$thread->id}/replies";
+//        dd($url);
+        $response = $this->post($url, $reply->toArray());
         //then
         $response->assertRedirect();
         //when
-        $response = $this->get(route('threads.show',['id' => $thread->id]));
+        $response = $this->get(route('threads.show', ['channel_slug' => $thread->channel->slug, 'id' => $thread->id]));
 //        $response->assertOk();
 //        $response->assertSee($reply->body);
     }
@@ -47,7 +49,20 @@ class ParticipateInForumTest extends TestCase {
         $thread = create(Thread::class);
         $reply = make(Reply::class);
         //when
-        $response = $this->post('/threads/' . $thread->id . '/replies', $reply->toArray());
+        $response = $this->post("/threads/{$thread->channel->slug}/{$thread->id}/replies", $reply->toArray());
+    }
+
+    /**
+     * @test
+     */
+    function a_reply_requires_a_body() {
+        $thread = create(Thread::class);
+        $reply = make(Reply::class, ['body' => null]);
+
+        $this->post(
+            route('replies.add', ['channel_slug' => $thread->channel->slug, 'id' => $thread->id]),
+            $reply->toArray())
+            ->assertSessionHasErrors('body');
     }
 
 }
