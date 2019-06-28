@@ -28,7 +28,7 @@ Route::get('/threads', 'ThreadsController@index')->name('threads.index');
 Route::get('/threads/create', 'ThreadsController@create')->name('threads.create');
 Route::get('/threads/{channel_slug}/{id}', 'ThreadsController@show')->name('threads.show');
 Route::post('/threads', 'ThreadsController@store')->name('threads.store');
-Route::get('/threads/{channel_slug}','ThreadsController@index');
+Route::get('/threads/{channel_slug}','ThreadsController@index')->name('threads.index.filter');
 
 Route::post('/threads/{channel_slug}/{id}/replies', 'RepliesController@store')->name('replies.add');
 
