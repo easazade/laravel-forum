@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Channel;
 use App\Reply;
 use App\Thread;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -25,7 +26,8 @@ class ReadThreadsTest extends TestCase {
      */
     public function a_user_can_browse_threads() {
         //when
-        $response = $this->get('/threads');
+        $this->disableExceptionHandling();
+        $response = $this->get(route('threads.index'));
         //then
         $response->assertStatus(200);
         $response->assertSee($this->thread->title);
@@ -38,7 +40,7 @@ class ReadThreadsTest extends TestCase {
         //when
         $response =
         $response = $this->get(route('threads.show',
-            ['channel_slug' => $this->thread->channel->slug,'id' => $this->thread->id]));
+            ['channel_slug' => $this->thread->channel->slug, 'id' => $this->thread->id]));
         //then
         $response->assertStatus(200);
         $response->assertSee($this->thread->title);
@@ -53,7 +55,7 @@ class ReadThreadsTest extends TestCase {
         $reply = create(Reply::class, ['thread_id' => $this->thread->id]);
         //when
         $response = $this->get(route('threads.show',
-            ['channel_slug' => $this->thread->channel->slug,'id' => $this->thread->id]));
+            ['channel_slug' => $this->thread->channel->slug, 'id' => $this->thread->id]));
         //then
         $response->assertStatus(200);
         $response->assertSee($reply->body);
@@ -68,11 +70,26 @@ class ReadThreadsTest extends TestCase {
         $threadInChannel = create(Thread::class, ['channel_id' => $channel->id]);
         $threadNotInChannel = create(Thread::class);
 
-        $this->get("threads/{$channel->slug}")
+        $this->get(route('threads.index.filter', ['channel_slug' => $channel->slug]))
             ->assertSee($threadInChannel->title)
             ->assertDontSee($threadNotInChannel->title);
     }
 
-
+    /**
+     * @test
+     */
+    function a_user_can_filter_threads_by_any_user_name() {
+        //with
+        $johnDoe = create(User::class);
+        $sam = create(User::class);
+        $user = $this->signIn($sam);
+        $threadBySam = create(Thread::class, ['user_id' => auth()->id()]);
+        $threadByJohn = create(Thread::class, ['user_id' => $johnDoe->id]);
+        //when
+        $url = route('threads.index', ['by' => $sam->name]);
+        $this->get($url)
+            ->assertSee($threadBySam->body)
+            ->assertDontSee($threadByJohn->body);
+    }
 
 }

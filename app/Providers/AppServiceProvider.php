@@ -26,10 +26,11 @@ class AppServiceProvider extends ServiceProvider {
 //            $view->with('channels', Channel::all());
 //        });
 
-//        View::composer('*', function ($view) {
-//            $view->with('channels', Channel::all());
-//        });
+        View::composer('*', function ($view) {
+            $view->with('channels', Channel::all());
+        });
 
-        View::share('channels', Channel::all());
+        //a share method will run before migration in our tests
+//        View::share('channels', Channel::all());
     }
 }

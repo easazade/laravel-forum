@@ -26,9 +26,20 @@
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
-            <a class="navbar-brand" href="{{ route('threads.index') }}">
-                Threads
-            </a>
+            <div class="dropdown show mr-2">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Threads
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="{{route('threads.index')}}">All Threads</a>
+                    @if(auth()->check())
+                        <a class="dropdown-item" href="{{route('threads.index',['by' => auth()->user()->name])}}">My
+                            Threads</a>
+                    @endif
+                </div>
+            </div>
             <a class="navbar-brand" style="color: seagreen;" href="{{ route('threads.create') }}">
                 new +
             </a>
